@@ -1,0 +1,11 @@
+.stateSetter {
+   cursor: pointer;
+    transition: background-color 0.2s ease;
+    color:rgb(0, 0, 0);
+    border-radius: 5px;
+    margin:0.5rem 0 0.5rem 0;
+    &:hover{
+    background-color: black;
+    color: white;
+   }
+}

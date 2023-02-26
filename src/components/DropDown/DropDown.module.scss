@@ -1,0 +1,21 @@
+.dropDownContainer {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  margin-top: 0.4rem;
+  background-color: rgb(255, 255, 255);
+  border-radius: 5px;
+  box-shadow: 0 0 2px black;
+  padding:0.8rem;
+}
+
+.dropdown {
+    transition: box-shadow 0.3s ease;
+  position: relative;
+  width: 100%;
+  height: max-content;
+  color: black;
+cursor: pointer;
+
+
+}

@@ -1,0 +1,16 @@
+.dropDownWrapper {
+  border-radius: 10px;
+  font-family: monospace;
+}
+.dropDownContainer {
+  display: flex;
+  gap: 1rem;
+  padding: 0.5rem;
+}
+.dropdown {
+  cursor: pointer;
+  box-shadow: 0 0 2px black;
+  border-radius: 5px;
+  color: black;
+  position: relative;
+}

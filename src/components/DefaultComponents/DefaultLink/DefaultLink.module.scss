@@ -1,0 +1,16 @@
+
+.linkContainer{
+    margin:0.4rem 0 0.4rem 0;
+    color: blue;
+    padding-inline: 0.3rem;
+    transition: background-color 0.2s ease;
+    &:hover{
+        background-color: rgb(4, 0, 255);
+    }
+}
+.linkContainer:hover .link {
+    color: white;
+}
+.link{
+    color:rgb(4, 0, 255);
+    }
