@@ -1,9 +1,6 @@
 {
-  "name": "@eddimel1/react-dropdown-group",
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/react-dropdown-group"
-  },
-  "version": "0.1.0",
+  "name": "react-dropdown-group",
+  "version": "0.1.5",
   "description": "A simple template for a custom React component library",
   "scripts": {
     "rollup": "rollup -c",
@@ -11,7 +8,7 @@
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },
-  "author": "YOUR_NAME",
+  "author": "Eduard Melentjev",
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.16.0",
@@ -53,5 +50,10 @@
   "files": [
     "dist"
   ],
-  "types": "dist/index.d.ts"
+  "types": "dist/index.d.ts",
+  "peerDependencies": {
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-router-dom": "6.8.1"
+  }
 }

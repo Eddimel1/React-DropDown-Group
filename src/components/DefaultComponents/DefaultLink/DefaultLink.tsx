@@ -1,5 +1,4 @@
-import React from "react";
-import { FC, memo } from "react";
+import React , { FC, memo } from "react";
 import classes from "./DefaultLink.module.scss";
 type Props = {
   path: string;

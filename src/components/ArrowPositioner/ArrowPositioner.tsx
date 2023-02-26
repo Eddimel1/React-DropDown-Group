@@ -1,5 +1,4 @@
-import React from "react";
-import  { FC } from "react";
+import  React ,{ FC } from "react";
 import classes from "./ArrowPositioner.module.scss";
 
 type _props = {

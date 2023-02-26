@@ -1,6 +1,5 @@
 
-
-import React , { FC, memo, useState, useRef } from "react";
+import React, { FC, memo, useState, useRef } from "react";
 import { ArrowPositioner } from "../ArrowPositioner/ArrowPositioner";
 import { DefaultArrow } from "../DefaultComponents/DefaultDropDownItem/DefaultArrow/DefaultArrow";
 import { DefaultDropDownItem } from "../DefaultComponents/DefaultDropDownItem/DefaultDropDownItem/DefaultDropDownItem";
@@ -41,10 +40,11 @@ export const DropDown: FC<_props> = memo(
     classNames,
     index,
   }) => {
-    const [selected, _setSelected] = useState<{
-      index: number;
-      name: string;
-    }>();
+    const [selected, _setSelected] =
+      useState<{
+        index: number;
+        name: string;
+      }>();
     const [_state, setState] = useState<DropDownSharedState>({
       path: "",
       selected: undefined,
@@ -95,7 +95,8 @@ export const DropDown: FC<_props> = memo(
           if (dropDownItem.type === "dropdown") {
             const icon = dropDownItem.icon;
             const renderRightIcon =
-              typeof icon === "function" && dropDownItems.config?.iconDefaultStyles
+              typeof icon === "function" &&
+              dropDownItems.config?.iconDefaultStyles
                 ? icon(dropDownItems.config?.iconDefaultStyles)
                 : icon;
             const defaultLook = sharedConfig?.defaultItemLook;

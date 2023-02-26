@@ -1,16 +1,11 @@
-import { useState, useRef, useEffect, useCallback, FC, memo } from "react";
+import React, { FC, memo, useRef, useCallback, useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { ArrowPositioner } from "../ArrowPositioner/ArrowPositioner";
 import { DefaultArrow } from "../DefaultComponents/DefaultDropDownItem/DefaultArrow/DefaultArrow";
 import { DefaultDropDownItem } from "../DefaultComponents/DefaultDropDownItem/DefaultDropDownItem/DefaultDropDownItem";
-import {
-  DropDownMultiState,
-  DropDownSharedState,
-DropDownT
-} from "./types";
-import classes from "./DropDownGroup.module.scss";
-import React from "react";
 import { DropDown } from "../DropDown/DropDown";
+import { DropDownT, DropDownSharedState, DropDownMultiState } from "./types";
+import classes from './DropDownGroup.module.scss'
 
 export type DropDownGroupProps = {
   classNames?: {
