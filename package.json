@@ -1,5 +1,5 @@
 {
-  "name": "@Eddimel1/react-dropdown-group",
+  "name": "@eddimel1/react-dropdown-group",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/react-dropdown-group"
   },
