@@ -1,16 +1,18 @@
-.dropDownWrapper {
-  border-radius: 10px;
-  font-family: monospace;
+.dropDownTreeSWrapper {
+  padding: 0.5rem;
+ color:#4e4a42;
+
 }
-.dropDownContainer {
+.dropDownTreeSContainer {
   display: flex;
   gap: 1rem;
-  padding: 0.5rem;
+  
 }
-.dropdown {
+.dropdownTree{
+    color:#4e4a42;
   cursor: pointer;
   box-shadow: 0 0 2px black;
-  border-radius: 5px;
   color: black;
   position: relative;
+   background-color:#c3cad1;
 }

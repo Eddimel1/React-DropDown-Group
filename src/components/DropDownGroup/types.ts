@@ -32,6 +32,8 @@ export type DropDownConfig = {
   iconDefaultStyles?: React.CSSProperties;
   defaultArrow?: boolean;
   customArrow?: JSX.Element;
+  iconPosition?: "left" | "right";
+  closeDropdownsOnStateSet?:boolean
   defaultItemLook?: (
     label: string,
     icon?: JSX.Element | ((styles: React.CSSProperties) => JSX.Element),

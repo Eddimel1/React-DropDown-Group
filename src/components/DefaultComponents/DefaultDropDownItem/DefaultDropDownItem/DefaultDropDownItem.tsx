@@ -1,22 +1,28 @@
-import React, { FC} from "react";
+import { FC } from "react";
 import classes from "./DefaultDropDownItem.module.scss";
 type Props = {
   label: string;
-  icon?: any
+  icon?: any;
+  iconPosition?: "left" | "right";
   arrow?: React.ReactNode;
 };
 
-export const DefaultDropDownItem: FC<Props> = ({ label, icon, arrow }) => {
+export const DefaultDropDownItem: FC<Props> = ({
+  label,
+  icon,
+  arrow,
+  iconPosition = "left",
+}) => {
   return (
     <div className={classes.defaultDropDownItemWrapper}>
       <div className={classes.defaultDropDownItemContainer}>
-        <div style={{ display: "flex" }}>
+        <div className={classes.labelAndIcon}>
           <div>{label}</div>
-          <div style={{ display: "flex", flexDirection: "column" }}>
-            <div> {typeof icon === 'function' ? icon({}) : icon}</div>
+          <div style={{ order: iconPosition === "left" ? "-1" : "" }}>
+            {typeof icon === "function" ? icon({}) : icon}
           </div>
         </div>
-        <div style={{ marginTop: "1rem" }}>{arrow && arrow}</div>
+        <div className={classes.arrowWrapper}>{arrow && arrow}</div>
       </div>
     </div>
   );

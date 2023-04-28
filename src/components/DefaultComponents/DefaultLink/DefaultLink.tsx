@@ -1,17 +1,15 @@
-import React , { FC, memo } from "react";
+import  { FC, memo } from "react";
 import classes from "./DefaultLink.module.scss";
 type Props = {
   path: string;
   label: string;
 };
-
-
 export const DefaultLink: FC<Props> = memo(({ path, label }) => {
   const linkClickHandler = (path: string) => {
     window.location.assign(path);
   };
   return (
-    <div
+    <div data-react-dropdown-unit
       onClick={() => linkClickHandler(path)}
       className={classes.linkContainer}
     >

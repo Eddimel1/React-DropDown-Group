@@ -1,10 +1,14 @@
-
-import React, { FC, memo, useState, useRef } from "react";
+import { FC, memo, useState, useRef } from "react";
 import { ArrowPositioner } from "../ArrowPositioner/ArrowPositioner";
 import { DefaultArrow } from "../DefaultComponents/DefaultDropDownItem/DefaultArrow/DefaultArrow";
 import { DefaultDropDownItem } from "../DefaultComponents/DefaultDropDownItem/DefaultDropDownItem/DefaultDropDownItem";
 import { DefaultLink } from "../DefaultComponents/DefaultLink/DefaultLink";
-import { DropDownItems, DropDownSharedState, DropDownMultiState, DropDownConfig } from "../DropDownGroup/types";
+import {
+  DropDownItems,
+  DropDownSharedState,
+  DropDownMultiState,
+  DropDownConfig,
+} from "../DropDownGroup/types";
 import { DefaultStateSetter } from "../StateSetter/StateSetter";
 import classes from "./DropDown.module.scss";
 type _props = {
@@ -40,11 +44,10 @@ export const DropDown: FC<_props> = memo(
     classNames,
     index,
   }) => {
-    const [selected, _setSelected] =
-      useState<{
-        index: number;
-        name: string;
-      }>();
+    const [selected, _setSelected] = useState<{
+      index: number;
+      name: string;
+    }>();
     const [_state, setState] = useState<DropDownSharedState>({
       path: "",
       selected: undefined,
@@ -55,6 +58,15 @@ export const DropDown: FC<_props> = memo(
     );
     const isMultiStateSetting = onMultiStateSet ? true : false;
     const coordinatesRef = useRef<DOMRect>();
+
+    const position = {
+      [sharedConfig?.expandDirection || "left"]: `${
+        isFirstDropDown
+          ? 0
+          : parentCoordinates?.width + (sharedConfig?.sideDistance || 10)
+      }px`,
+      top: `${isFirstDropDown ? "" : sharedConfig?.topDistance || 0}px`,
+    };
     const linkClickHandler = (path: string) => {
       window.location.assign(path);
     };
@@ -71,17 +83,10 @@ export const DropDown: FC<_props> = memo(
 
       _setSelected({ index: i, name });
     };
-    const position = {
-      [sharedConfig?.expandDirection || "left"]: `${
-        isFirstDropDown
-          ? 0
-          : parentCoordinates?.width + (sharedConfig?.sideDistance || 10)
-      }px`,
-      top: `${isFirstDropDown ? "" : sharedConfig?.topDistance || 0}px`,
-    };
+
     if (!open) return null;
     return (
-      <div
+      <div data-react-dropdown-group='react-dropdown-group'
         ref={(ref) => {
           if (ref) {
             const coordinates = ref.getBoundingClientRect();
@@ -93,13 +98,8 @@ export const DropDown: FC<_props> = memo(
       >
         {dropDownItems.map((dropDownItem, i) => {
           if (dropDownItem.type === "dropdown") {
+            
             const icon = dropDownItem.icon;
-            const renderRightIcon =
-              typeof icon === "function" &&
-              dropDownItems.config?.iconDefaultStyles
-                ? icon(dropDownItems.config?.iconDefaultStyles)
-                : icon;
-            const defaultLook = sharedConfig?.defaultItemLook;
             const eventListeners =
               sharedConfig?.expandEvent === "hover"
                 ? {
@@ -114,8 +114,16 @@ export const DropDown: FC<_props> = memo(
                     },
                   }
                 : null;
+            const renderRightIcon =
+              typeof icon === "function" &&
+              dropDownItems.config?.iconDefaultStyles
+                ? icon(dropDownItems.config?.iconDefaultStyles)
+                : icon;
+            const defaultLook = sharedConfig?.defaultItemLook;
+
             return (
               <div
+              data-react-dropdown-group='react-dropdown-group'
                 className={`${classes.dropdown} ${classNames?.dropDownContainer}`}
                 key={i}
                 {...eventListeners}
@@ -125,10 +133,7 @@ export const DropDown: FC<_props> = memo(
                     dropDownItem.label,
                     renderRightIcon,
                     dropDownItems.config?.defaultArrow ? (
-                      <DefaultArrow
-                        open={selected?.index === i}
-                        depth={1}
-                      ></DefaultArrow>
+                      <DefaultArrow open={selected?.index === i}></DefaultArrow>
                     ) : (
                       dropDownItems.config?.customArrow
                     )
@@ -137,20 +142,15 @@ export const DropDown: FC<_props> = memo(
                   <DefaultDropDownItem
                     label={dropDownItem.label}
                     icon={renderRightIcon}
+                    iconPosition={sharedConfig?.iconPosition}
                     arrow={
-                      dropDownItems.config?.customArrow ? (
                         <ArrowPositioner
-                          arrow={dropDownItems.config?.customArrow}
+                          arrow={sharedConfig?.customArrow || <DefaultArrow
+                            open={selected?.index === i}
+                          ></DefaultArrow>}
                           open={selected?.index === i}
-                          depth={1}
-                          isCustom={true}
                         ></ArrowPositioner>
-                      ) : (
-                        <DefaultArrow
-                          open={selected?.index === i}
-                          depth={1}
-                        ></DefaultArrow>
-                      )
+                     
                     }
                   ></DefaultDropDownItem>
                 )}
@@ -175,6 +175,7 @@ export const DropDown: FC<_props> = memo(
             const icon = dropDownItem.icon;
             return (
               <div
+                className={classes.dropDownItemContainer}
                 key={i}
                 onClick={() => {
                   const s = state;
@@ -198,6 +199,7 @@ export const DropDown: FC<_props> = memo(
           } else if (dropDownItem.type === "unit" && onStateSet) {
             return (
               <div
+                className={classes.dropDownItemContainer}
                 key={i}
                 onClick={() => {
                   if ("selected" in state) {
@@ -221,6 +223,7 @@ export const DropDown: FC<_props> = memo(
           } else if (dropDownItem.type === "unit" && onMultiStateSet) {
             return (
               <div
+                className={classes.dropDownItemContainer}
                 key={i}
                 onClick={() => {
                   onMultiStateSet(

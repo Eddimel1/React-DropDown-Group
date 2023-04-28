@@ -1,17 +1,14 @@
-import React , { FC } from "react";
+import { FC } from "react";
 import { ArrowPositioner } from "../../../ArrowPositioner/ArrowPositioner";
 import classes from "./DefaultArrow.module.scss";
 type Props = {
-  depth: number;
   open: boolean;
 };
-export const DefaultArrow: FC<Props> = ({ open, depth=0 }) => {
+export const DefaultArrow: FC<Props> = ({ open}) => {
   return (
     <ArrowPositioner
-      arrow={<i className={classes.linkDropDownGroupArrow}></i>}
+      arrow={<span className={classes.linkDropDownGroupArrow}></span>}
       open={open}
-      depth={depth}
-      isCustom={false}
     ></ArrowPositioner>
   );
 };

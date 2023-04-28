@@ -1,11 +1,10 @@
-import React, { FC, memo, useRef, useCallback, useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { FC, memo, useRef, useCallback, useEffect, useState } from "react";
 import { ArrowPositioner } from "../ArrowPositioner/ArrowPositioner";
 import { DefaultArrow } from "../DefaultComponents/DefaultDropDownItem/DefaultArrow/DefaultArrow";
 import { DefaultDropDownItem } from "../DefaultComponents/DefaultDropDownItem/DefaultDropDownItem/DefaultDropDownItem";
 import { DropDown } from "../DropDown/DropDown";
 import { DropDownT, DropDownSharedState, DropDownMultiState } from "./types";
-import classes from './DropDownGroup.module.scss'
+import classes from "./DropDownGroup.module.scss";
 
 export type DropDownGroupProps = {
   classNames?: {
@@ -18,6 +17,7 @@ export type DropDownGroupProps = {
   onStateSet?: (state: DropDownSharedState) => void;
   onMultiStateSet?: (state: DropDownMultiState[]) => void;
 };
+
 
 export const DropDownGroup: FC<DropDownGroupProps> = memo(
   ({ dropDowns, onStateSet, classNames, onMultiStateSet }) => {
@@ -57,30 +57,27 @@ export const DropDownGroup: FC<DropDownGroupProps> = memo(
         const newState = [...state];
         onMultiStateSet && onMultiStateSet(newState);
       },
-      []
+      [onMultiStateSet]
     );
 
-    const detectClickOutside = useCallback((e: any) => {
-      if (!wrapperRef.current?.contains(e.target)) {
-        setSelected(undefined);
-      }
+    const detectClickOutside = useCallback((e: MouseEvent) => {
+    const element = document.elementFromPoint(e.x,e.y)
+    if(!element?.closest('[data-react-dropdown-group]') || ((element?.hasAttribute('data-react-dropdown-unit')) && dropDowns.config?.closeDropdownsOnStateSet)) setSelected(undefined)
     }, []);
-
     useEffect(() => {
       document.body.addEventListener("click", detectClickOutside);
       return () => {
         document.removeEventListener("click", detectClickOutside);
       };
     }, []);
-
-    useEffect(() => {}, []);
     return (
       <div
-        className={`${classes.dropDownWrapper} ${classNames?.dropDownInitialWrapper}`}
+      data-react-dropdown-group='react-dropdown-group'
+        className={`${classes.dropDownTreeSWrapper} ${classNames?.dropDownInitialWrapper}`}
         ref={wrapperRef}
       >
         <div
-          className={`${classes.dropDownContainer}`}
+          className={`${classes.dropDownTreeSContainer}`}
           ref={(ref) => {
             if (ref) {
               const coordinates = ref.getBoundingClientRect();
@@ -117,7 +114,7 @@ export const DropDownGroup: FC<DropDownGroupProps> = memo(
                     };
               return (
                 <div
-                  className={`${classes.dropdown} ${classNames?.dropDownInitialContainer}`}
+                  className={`${classes.dropdownTree} ${classNames?.dropDownInitialContainer}`}
                   key={i}
                   {...eventListeners}
                 >
@@ -126,10 +123,7 @@ export const DropDownGroup: FC<DropDownGroupProps> = memo(
                       dropdown.label,
                       renderRightIcon,
                       dropDowns.config?.defaultArrow ? (
-                        <DefaultArrow
-                          open={selected === i}
-                          depth={1}
-                        ></DefaultArrow>
+                        <DefaultArrow open={selected === i}></DefaultArrow>
                       ) : (
                         dropDowns.config?.customArrow
                       )
@@ -138,24 +132,19 @@ export const DropDownGroup: FC<DropDownGroupProps> = memo(
                     <DefaultDropDownItem
                       label={dropdown.label}
                       icon={renderRightIcon}
+                      iconPosition={dropDowns.config?.iconPosition}
                       arrow={
                         dropDowns.config?.customArrow ? (
                           <ArrowPositioner
                             arrow={dropDowns.config?.customArrow}
                             open={selected === i}
-                            depth={1}
-                            isCustom={true}
                           ></ArrowPositioner>
                         ) : (
-                          <DefaultArrow
-                            open={selected === i}
-                            depth={1}
-                          ></DefaultArrow>
+                          <DefaultArrow open={selected === i}></DefaultArrow>
                         )
                       }
                     ></DefaultDropDownItem>
                   )}
-
                   <DropDown
                     open={selected === i}
                     dropDownItems={dropdown.dropdown}
@@ -169,20 +158,6 @@ export const DropDownGroup: FC<DropDownGroupProps> = memo(
                     onMultiStateSet={onMultiStateSet && multiStateHandler}
                   ></DropDown>
                 </div>
-              );
-            } else if (
-              dropdown.type === "unit" &&
-              !onStateSet &&
-              !onMultiStateSet
-            ) {
-              return (
-                <NavLink
-                  key={i}
-                  style={{ boxShadow: "0 0 5px black", padding: "0.2rem" }}
-                  to={dropdown.path || `/${dropdown.value}`}
-                >
-                  <div style={{ marginTop: "0.1rem" }}>{dropdown.label}</div>
-                </NavLink>
               );
             }
           })}
