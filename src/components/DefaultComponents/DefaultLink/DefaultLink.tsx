@@ -10,6 +10,7 @@ export const DefaultLink: FC<Props> = memo(({ path, label }) => {
   };
   return (
     <div data-react-dropdown-unit
+    role="link"
       onClick={() => linkClickHandler(path)}
       className={classes.linkContainer}
     >

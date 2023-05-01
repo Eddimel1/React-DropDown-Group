@@ -86,7 +86,7 @@ export const DropDown: FC<_props> = memo(
 
     if (!open) return null;
     return (
-      <div data-react-dropdown-group='react-dropdown-group'
+      <div
         ref={(ref) => {
           if (ref) {
             const coordinates = ref.getBoundingClientRect();
@@ -94,11 +94,10 @@ export const DropDown: FC<_props> = memo(
           }
         }}
         style={{ ...position }}
-        className={`${classes.dropDownContainer} ${classNames?.dropDownsWrapper}`}
+        className={`${classes.dropDownContainer} ${classNames?.dropDownsWrapper ? classNames?.dropDownsWrapper : ''}`}
       >
         {dropDownItems.map((dropDownItem, i) => {
           if (dropDownItem.type === "dropdown") {
-            
             const icon = dropDownItem.icon;
             const eventListeners =
               sharedConfig?.expandEvent === "hover"
@@ -123,8 +122,10 @@ export const DropDown: FC<_props> = memo(
 
             return (
               <div
-              data-react-dropdown-group='react-dropdown-group'
-                className={`${classes.dropdown} ${classNames?.dropDownContainer}`}
+                tabIndex={i}
+                aria-haspopup
+                aria-expanded={i === selected?.index}
+                className={`${classes.dropdown} ${classNames?.dropDownContainer ? classNames?.dropDownContainer : ''}`}
                 key={i}
                 {...eventListeners}
               >
@@ -144,13 +145,16 @@ export const DropDown: FC<_props> = memo(
                     icon={renderRightIcon}
                     iconPosition={sharedConfig?.iconPosition}
                     arrow={
-                        <ArrowPositioner
-                          arrow={sharedConfig?.customArrow || <DefaultArrow
-                            open={selected?.index === i}
-                          ></DefaultArrow>}
-                          open={selected?.index === i}
-                        ></ArrowPositioner>
-                     
+                      <ArrowPositioner
+                        arrow={
+                          sharedConfig?.customArrow || (
+                            <DefaultArrow
+                              open={selected?.index === i}
+                            ></DefaultArrow>
+                          )
+                        }
+                        open={selected?.index === i}
+                      ></ArrowPositioner>
                     }
                   ></DefaultDropDownItem>
                 )}

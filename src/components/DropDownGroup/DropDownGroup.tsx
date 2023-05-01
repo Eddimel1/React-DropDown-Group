@@ -73,7 +73,7 @@ export const DropDownGroup: FC<DropDownGroupProps> = memo(
     return (
       <div
       data-react-dropdown-group='react-dropdown-group'
-        className={`${classes.dropDownTreeSWrapper} ${classNames?.dropDownInitialWrapper}`}
+        className={`${classes.dropDownTreeSWrapper} ${classNames?.dropDownInitialWrapper ? classNames?.dropDownInitialWrapper : ''}`}
         ref={wrapperRef}
       >
         <div
@@ -114,7 +114,10 @@ export const DropDownGroup: FC<DropDownGroupProps> = memo(
                     };
               return (
                 <div
-                  className={`${classes.dropdownTree} ${classNames?.dropDownInitialContainer}`}
+                aria-haspopup
+                aria-expanded={i === selected}
+                tabIndex={i}
+                  className={`${classes.dropdownTree} ${classNames?.dropDownInitialContainer ? classNames?.dropDownInitialContainer : ''}`}
                   key={i}
                   {...eventListeners}
                 >
